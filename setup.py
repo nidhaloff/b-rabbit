@@ -33,7 +33,7 @@ setup(
     ],
     description="An abstract interface for RabbitMQ communication",
     install_requires=requirements,
-    long_description_content_type='text/markdown',
+    #long_description_content_type='text/markdown',
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
@@ -44,6 +44,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/nidhaloff/b_rabbit',
-    version='0.1.1',
+    version='0.1.4',
     zip_safe=False,
 )

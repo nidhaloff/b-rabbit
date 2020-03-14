@@ -13,12 +13,17 @@ b_rabbit
         :target: https://b_rabbit.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+
+
+
 An abstract interface for RabbitMQ communication.
 
-RabbitMq Interface to make using RabbitMQ Message broker easier to implement and maintain especially inside a SOA Projects.
-it provides a high level API on top of rabbitpy to abstract the implementation of publish-subscribe and RPCs
-It uses Multithreading to assign a single Thread to every Task and reduce the headache of writing boilerplate code.
-Take a look at the examples.
+b_rabbit is a RabbitMq Interface on top of rabbitpy to make implementing RabbitMQ messaging patterns easier. It is very useful especially
+inside large projects, in which many boilerplate code must be written.
+it uses a parent wrapper class that wrap all connections and classes definitions of different messaging patterns,
+then using the patterns is pretty straightforward by creating instances from the parent class depending on the
+pattern you want to use. it uses multithreading to asynchronously orchestrate between multiple subscription and RPCs.
+
 
 * Free software: MIT license
 * Documentation: https://b_rabbit.readthedocs.io.
@@ -26,9 +31,10 @@ Take a look at the examples.
 
 Features
 --------
-b_rabbit implements all messaging pattern from working queues, publish-subscribe to remote procedure calls.
-high level API that provide asynchronous messaging.
 
-Contribution
+- it implements all RabbitMQ messaging patterns from work queues to RPCs.
+- provides an easy high level API (take a look at the examples)
+- thread safe since it uses rabbitpy
+
+Credits
 -------
-Contributors and new ideas & suggestions are always welcome
