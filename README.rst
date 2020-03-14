@@ -1,5 +1,5 @@
 ========
-b-rabbit
+b_rabbit
 ========
 
 
@@ -10,7 +10,7 @@ b-rabbit
         :target: https://travis-ci.com/nidhaloff/b_rabbit
 
 .. image:: https://readthedocs.org/projects/b-rabbit/badge/?version=latest
-        :target: https://b-rabbit.readthedocs.io/en/latest/?badge=latest
+        :target: https://b_rabbit.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 
@@ -26,7 +26,7 @@ Take a look at the examples.
 
 
 * Free software: MIT license
-* Documentation: https://b-rabbit.readthedocs.io.
+* Documentation: https://b_rabbit.readthedocs.io.
 
 
 Features
