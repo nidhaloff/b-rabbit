@@ -33,6 +33,7 @@ setup(
     ],
     description="An abstract interface for RabbitMQ communication",
     install_requires=requirements,
+    long_description_content_type='text/markdown',
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
