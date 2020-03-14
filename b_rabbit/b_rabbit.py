@@ -119,6 +119,7 @@ class BRabbit:
                     else:
 
                         logger.info(f'message sent from: {self.exchange_name} and received successfully from RabbitMQ')
+                return published
 
             except rabbitpy.exceptions.MessageReturnedException as e:
                 logger.error(
