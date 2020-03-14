@@ -19,10 +19,10 @@ B-Rabbit
 An abstract interface for RabbitMQ communication.
 
 RabbitMq Interface to make using RabbitMQ inside a SOA Project easier to implement and maintain.
-it should be easier to use and more abstracter, more consistent with no duplicate Code
+it provides a high level API on top of rabbitpy to abstract the implementation of publish-subscribe and RPCs
 
-it use Multithreading to assign a single Thread to every Task
-it's very helpfull when working on a big Software oriented Project where every developer is implementing a Mircroservice
+The package is very useful for large SOA projects. It uses Multithreading to assign a single Thread to every Task.
+Take a look at the examples.
 
 
 * Free software: MIT license
@@ -36,8 +36,3 @@ Features
 
 Credits
 -------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
