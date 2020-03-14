@@ -39,7 +39,7 @@ class BRabbit:
     connection = None
     _active_queues = []
 
-    def __init__(self, host: str, port: int):
+    def __init__(self, host: str = 'localhost', port: int = 5672):
 
         """
 		Wrapper class to store the connection to server globally.

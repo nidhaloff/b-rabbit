@@ -18,10 +18,11 @@ b_rabbit
 
 An abstract interface for RabbitMQ communication.
 
-RabbitMq Interface to make using RabbitMQ inside a SOA Project easier to implement and maintain.
+RabbitMq Interface to make using RabbitMQ Message broker easier to implement and maintain especially inside a SOA Projects.
 it provides a high level API on top of rabbitpy to abstract the implementation of publish-subscribe and RPCs
 
-The package is very useful for large SOA projects. It uses Multithreading to assign a single Thread to every Task.
+It uses Multithreading to assign a single Thread to every Task and reduce the headache of writing boilerplate code.
+
 Take a look at the examples.
 
 
@@ -32,7 +33,9 @@ Take a look at the examples.
 Features
 --------
 
-* TODO
+- b_rabbit implements all messaging pattern from working queues, publish-subscribe to remote procedure calls.
+- high level API that provide asynchronous messaging.
 
-Credits
+Contribution
 -------
+- Contributors and new ideas & suggestions are always welcome
