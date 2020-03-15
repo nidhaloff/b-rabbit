@@ -9,7 +9,7 @@ b_rabbit
 .. image:: https://img.shields.io/travis/nidhaloff/b_rabbit.svg
         :target: https://travis-ci.com/nidhaloff/b_rabbit
 
-.. image:: https://readthedocs.org/projects/b-rabbit/badge/?version=latest
+.. image:: https://readthedocs.org/projects/b_rabbit/badge/?version=latest
         :target: https://b_rabbit.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 

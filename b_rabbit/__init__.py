@@ -1,4 +1,4 @@
-"""Top-level package for B-Rabbit."""
+"""Top-level package for b_rabbit."""
 
 __author__ = """Nidhal Baccouri"""
 __email__ = 'nidhalbacc@gmail.com'
