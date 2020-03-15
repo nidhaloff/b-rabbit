@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'B-Rabbit'
+project = 'b_rabbit'
 copyright = "2020, Nidhal Baccouri"
 author = "Nidhal Baccouri"
 
@@ -128,7 +128,7 @@ latex_elements = {
 # [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'b_rabbit.tex',
-     'B-Rabbit Documentation',
+     'b_rabbit Documentation',
      'Nidhal Baccouri', 'manual'),
 ]
 
@@ -139,7 +139,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'b_rabbit',
-     'B-Rabbit Documentation',
+     'b_rabbit Documentation',
      [author], 1)
 ]
 
@@ -151,7 +151,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'b_rabbit',
-     'B-Rabbit Documentation',
+     'b_rabbit Documentation',
      author,
      'b_rabbit',
      'One line description of project.',

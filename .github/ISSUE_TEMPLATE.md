@@ -1,4 +1,4 @@
-* B-Rabbit version:
+* b_rabbit version:
 * Python version:
 * Operating System:
 
