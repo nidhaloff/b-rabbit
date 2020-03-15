@@ -1,4 +1,4 @@
-Welcome to B-Rabbit's documentation!
+Welcome to b_rabbit's documentation!
 ======================================
 
 .. toctree::

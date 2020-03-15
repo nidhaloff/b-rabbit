@@ -38,8 +38,8 @@ and "help wanted" is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-B-Rabbit could always use more documentation, whether as part of the
-official B-Rabbit docs, in docstrings, or even on the web in blog posts,
+b_rabbit could always use more documentation, whether as part of the
+official b_rabbit docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback

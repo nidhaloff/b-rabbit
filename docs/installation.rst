@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install B-Rabbit, run this command in your terminal:
+To install b_rabbit, run this command in your terminal:
 
 .. code-block:: console
 
     $ pip install b_rabbit
 
-This is the preferred method to install B-Rabbit, as it will always install the most recent stable release.
+This is the preferred method to install b_rabbit, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,7 +26,7 @@ you through the process.
 From sources
 ------------
 
-The sources for B-Rabbit can be downloaded from the `Github repo`_.
+The sources for b_rabbit can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 

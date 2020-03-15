@@ -25,6 +25,7 @@ then using the patterns is pretty straightforward by creating instances from the
 pattern you want to use. it uses multithreading to asynchronously orchestrate between multiple subscription and RPCs.
 
 
+
 * Free software: MIT license
 * Documentation: https://b_rabbit.readthedocs.io.
 
