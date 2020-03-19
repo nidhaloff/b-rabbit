@@ -33,8 +33,12 @@ To use b_rabbit in a project::
                                     publisher_name='name_it',
                                     event_listener=callback)
 
-
      # the callback is a function you need to define in order to do something with the received message
+     def callback(msg):
+        # do something with the received msg from the publisher
+        print(f"msg received: {msg}")
+
+
      # after that subscribing is straightforward:
      subscriber.subscribe_on_thread()
 
