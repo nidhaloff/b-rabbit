@@ -4,13 +4,13 @@ Usage
 
 To use b_rabbit in a project::
 
-    from rabbit_py import rabbit_py
+    from b_rabbit import b_rabbit
 
 
     #first, you need to create a BRabbit instance to provide rabbitMQ connection:
 
     # create a parent instance which provide a global rabbitMQ connection
-    rabbit = rabbit_py.BRabbit(host='localhost', port=5672)
+    rabbit = b_rabbit.BRabbit(host='localhost', port=5672)
 
     # Now it is very easy to use the messaging pattern with rabbitmq
     # here is a demonstration of using the publish-subscribe
@@ -38,4 +38,4 @@ To use b_rabbit in a project::
      # after that subscribing is straightforward:
      subscriber.subscribe_on_thread()
 
-    # take a look in the examples for more.
+    # take a look in the examples to see a working publish-subscribe and RPC

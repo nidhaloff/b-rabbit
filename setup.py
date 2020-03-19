@@ -21,7 +21,7 @@ setup(
     author_email='nidhalbacc@gmail.com',
     python_requires='>=3.5',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
@@ -44,6 +44,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/nidhaloff/b_rabbit',
-    version='0.1.6',
+    version='1.0.0',
     zip_safe=False,
 )
