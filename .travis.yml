@@ -6,6 +6,10 @@ python:
 install: pip install -U tox-travis
 script: tox
 services: rabbitmq
+addons:
+  apt:
+    packages:
+    - rabbitmq-server 
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
