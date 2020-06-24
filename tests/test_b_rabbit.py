@@ -47,3 +47,4 @@ def test_subscriber(rabbit):
                                         important_subscription=True,
                                         event_listener=callback)
     subscriber.subscribe_on_thread()
+    rabbit.close_connection()
