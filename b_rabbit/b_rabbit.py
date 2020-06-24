@@ -86,7 +86,7 @@ class BRabbit:
                                                       exchange_type=exchange_type,
                                                       durable=True)
                     self.exchange.declare()
-                    logger.info(f'Exchange is declared with the name: {self.exchange_name}')
+                    logger.info('Exchange is declared with the name: {}'.format(self.exchange_name))
 
             except Exception as e:
                 logger.exception(e)
@@ -112,18 +112,18 @@ class BRabbit:
                     if not published:
 
                         logger.warning(
-                            f'message sent from: {self.exchange_name} but RabbitMQ indicates Message publishing failure')
+                            'message sent from: {} but RabbitMQ indicates Message publishing failure'.format(self.exchange_name))
                     else:
 
-                        logger.info(f'message sent from: {self.exchange_name} and received successfully from RabbitMQ')
+                        logger.info('message sent from: {} and received successfully from RabbitMQ'.format(self.exchange_name))
                 return published
 
             except rabbitpy.exceptions.MessageReturnedException as e:
                 logger.error(
-                    f"Because of the Mandatory Publishing, a Consumer Queue must already be binded to the Exchange"
-                    f" to make sure that the published message will be sooner or later consumed and we will not lose it"
-                    f" so make sure that the subscriber Queue is already bounded to the Publisher  \n"
-                    f"More Description of the Exception => {e.args}")
+                    "Because of the Mandatory Publishing, a Consumer Queue must already be binded to the Exchange"
+                    " to make sure that the published message will be sooner or later consumed and we will not lose it"
+                    " so make sure that the subscriber Queue is already bounded to the Publisher  \n"
+                    "More Description of the Exception => {}".format(e.args))
 
             except Exception as e:
                 logger.exception(e.args, exc_info=False)
@@ -161,11 +161,11 @@ class BRabbit:
                                                   durable=True)
                 self.exchange.declare()
                 logger.info(
-                    f'Exchange is declared Successfully from Subscriber: {__name__} | with the name: {self.exchange_name}')
+                    'Exchange is declared Successfully from Subscriber: {} | with the name: {}'.format(__name__,self.exchange_name))
 
                 subscriber_name = self.exchange_name + '_' + routing_key + '_' + self.__get_subscriber_name() + '_queue'
 
-                logger.info(f'subscriber name: {subscriber_name}')
+                logger.info('subscriber name: {}'.format(subscriber_name))
                 queue = rabbitpy.Queue(channel,
                                        name=subscriber_name,
                                        durable=important_subscription,
@@ -173,7 +173,7 @@ class BRabbit:
                                        exclusive=False)
                 queue.declare()
 
-                logger.info(f'{queue.name} was successfully declared from subscriber: {subscriber_name}')
+                # logger.info('{queue.name} was successfully declared from subscriber: {subscriber_name}')
                 queue.bind(self.exchange_name, routing_key)
                 self.queue_name = queue.name
                 self.event_listener = event_listener
@@ -198,7 +198,7 @@ class BRabbit:
             subscriber_thread = threading.Thread(target=self.__subscribe, *thread_args, **thread_kwargs)
             subscriber_thread.start()
             if subscriber_thread.is_alive():
-                logger.info(f"Subscriber is running on The Thread: {subscriber_thread.name}")
+                logger.info("Subscriber is running on The Thread: {}".format(subscriber_thread.name))
 
         def __get_subscriber_name(self, in_docker=True):
             """get the subscriber name from host"""
@@ -206,12 +206,12 @@ class BRabbit:
                 if not in_docker:
                     import os
                     name = os.path.dirname(os.path.abspath(__file__))  # get the whole Path of the Project Repository
-                    logger.debug(f'name of the current Subscriber: {name}')
+                    # logger.debug(f'name of the current Subscriber: {name}')
                     return name.split('\\')[-2]  # return only the name of the Project (example: Statistics Service)
                 else:
                     import socket
                     name = socket.gethostname()
-                    logger.debug(f'name of the current Subscriber: {name}')
+                    # logger.debug(f'name of the current Subscriber: {name}')
                     return name
             except Exception as e:
                 logger.exception(e)
@@ -305,7 +305,7 @@ class BRabbit:
             task_thread = threading.Thread(target=self.__register_on_task, *thread_args, **thread_kwargs)
             task_thread.start()
             if task_thread.is_alive():
-                logger.info(f"Task Executor is running on The Thread: {task_thread.name}")
+                logger.info("Task Executor is running on The Thread: {}".format(task_thread.name))
 
     class TaskRequesterSynchron:
         '''
@@ -337,8 +337,8 @@ class BRabbit:
                                                         durable=True)
 
                 self.exchange.declare()
-                logger.info(
-                    f'Exchange: {self.exchange_name} was successfully declared from task Requester: {executor_name} ')
+                # logger.info(
+                #     f'Exchange: {self.exchange_name} was successfully declared from task Requester: {executor_name} ')
 
         @calc_execution_time
         def request_task(self, payload: str, queue_name=''):
@@ -354,8 +354,8 @@ class BRabbit:
 
                 callback_queue = rabbitpy.Queue(channel, name=queue_name, durable=True, exclusive=True)
                 callback_queue.declare()
-                logger.info(
-                    f'{callback_queue.name} was successfully declared from task Requester: {self.executor_name}')
+                # logger.info(
+                #     f'{callback_queue.name} was successfully declared from task Requester: {self.executor_name}')
 
                 request = rabbitpy.Message(channel,
                                            body_value=payload,
