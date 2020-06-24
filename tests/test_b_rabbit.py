@@ -9,7 +9,7 @@ from b_rabbit import BRabbit
 
 
 def test_connection():
-    with pytest.raises(Exception):
+    with pytest.raises(RuntimeError):
         BRabbit(host=1234, port='')
 
 
