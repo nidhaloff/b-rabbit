@@ -24,5 +24,11 @@ def test_rabbitmq_connection(rabbit):
     assert isinstance(rabbit, BRabbit)
     assert isinstance(rabbit.connection, rabbitpy.Connection)
 
-# def test_publisher():
-#     rabbitpy.Connection
+
+def test_publisher(rabbit):
+    publisher = rabbit.EventPublisher(b_rabbit=rabbit,
+                                      publisher_name='test',
+                                      exchange_type='topic',
+                                      external=False)
+    published = publisher.publish(routing_key='testing.test', payload='mock')
+    assert publisher is True
