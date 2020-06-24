@@ -4,11 +4,15 @@
 
 import pytest
 import mock
+import time
 from pytest_mock import mocker
 from b_rabbit import BRabbit
 import rabbitpy
 
 MSG = 'mock'
+REQUEST_MSG = 'request_msg'
+RESPONSE_MSG = 'response_msg'
+
 
 @pytest.fixture
 def rabbit():
@@ -47,4 +51,30 @@ def test_subscriber(rabbit):
                                         important_subscription=True,
                                         event_listener=callback)
     subscriber.subscribe_on_thread()
+    rabbit.close_connection()
+
+
+def test_requester(rabbit):
+    def callback(msg):
+        assert msg == RESPONSE_MSG
+
+    requester = rabbit.TaskRequesterSynchron(b_rabbit=rabbit,
+                                             executor_name='requester',
+                                             routing_key='requester.request',
+                                             response_listener=callback)
+    requester.request_task(payload=REQUEST_MSG, queue_name='test')
+    rabbit.close_connection()
+
+
+def test_responser(rabbit):
+    def serve(server, msg):
+        assert msg == REQUEST_MSG
+        time.sleep(3)
+        server.send_return(payload=RESPONSE_MSG)
+
+    responser = rabbit.TaskExecutor(b_rabbit=rabbit,
+                                    executor_name='requester',
+                                    routing_key='requester.request',
+                                    task_listener=serve)
+    responser.run_task_on_thread()
     rabbit.close_connection()
