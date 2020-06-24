@@ -3,9 +3,6 @@
 """Tests for `b_rabbit` package."""
 
 import pytest
-import mock
-import time
-from pytest_mock import mocker
 from b_rabbit import BRabbit
 import rabbitpy
 
