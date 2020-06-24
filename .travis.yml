@@ -5,11 +5,13 @@ python:
 - 3.6
 install: pip install -U tox-travis
 script: tox
-services: rabbitmq
+dist: xenial
 addons:
-  apt:
-    packages:
-    - rabbitmq-server 
+    apt:
+      packages:
+        - rabbitmq-server
+services:
+  - rabbitmq
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
