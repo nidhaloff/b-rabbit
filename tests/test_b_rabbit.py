@@ -18,4 +18,5 @@ def test_rabbitmq_connection():
 
     rabbit = BRabbit()
     assert rabbit
-    assert isinstance(rabbit, rabbitpy.Connection)
+    assert isinstance(rabbit, BRabbit)
+    assert isinstance(rabbit.connection, rabbitpy.Connection)
