@@ -62,7 +62,7 @@ def test_requester(rabbit):
                                              executor_name='requester',
                                              routing_key='requester.request',
                                              response_listener=callback)
-    requester.request_task(payload=REQUEST_MSG, queue_name='test')
+    requester.request_task(payload=REQUEST_MSG)
     rabbit.close_connection()
 
 
@@ -77,4 +77,6 @@ def test_responser(rabbit):
                                     routing_key='requester.request',
                                     task_listener=serve)
     responser.run_task_on_thread()
-    rabbit.close_connection()
+    with pytest.raises(Exception):
+        time.sleep(10)
+        rabbit.close_connection()

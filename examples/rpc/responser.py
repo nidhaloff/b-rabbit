@@ -17,3 +17,5 @@ taskExecuter = rabbit.TaskExecutor(b_rabbit=rabbit,
                                    task_listener=taskListener)
 
 taskExecuter.run_task_on_thread()
+# time.sleep(15)
+# rabbit.close_connection()
