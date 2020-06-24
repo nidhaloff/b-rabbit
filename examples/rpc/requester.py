@@ -16,7 +16,7 @@ taskRequesterSynchron = rabbit.TaskRequesterSynchron(b_rabbit=rabbit,
                                                      response_listener=taskResponseListener)
 
 
-taskRequesterSynchron.request_task(json.dumps({"username": "Nidhal"}))
+taskRequesterSynchron.request_task('mock from requester')
 
 
 print('End')

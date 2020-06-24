@@ -197,7 +197,7 @@ class BRabbit:
 
             subscriber_thread = threading.Thread(target=self.__subscribe, *thread_args, **thread_kwargs)
             subscriber_thread.start()
-            if subscriber_thread.isAlive():
+            if subscriber_thread.is_alive():
                 logger.info(f"Subscriber is running on The Thread: {subscriber_thread.name}")
 
         def __get_subscriber_name(self, in_docker=True):
@@ -304,7 +304,7 @@ class BRabbit:
 
             task_thread = threading.Thread(target=self.__register_on_task, *thread_args, **thread_kwargs)
             task_thread.start()
-            if task_thread.isAlive():
+            if task_thread.is_alive():
                 logger.info(f"Task Executor is running on The Thread: {task_thread.name}")
 
     class TaskRequesterSynchron:
