@@ -22,7 +22,7 @@ def calc_execution_time(func):
             res = func(*args, **kwargs)
             after = default_timer()
             execution_time = after - before
-            print(f"execution time of the Function {func.__qualname__} is :=> {execution_time} seconds")
+            print("execution time of the Function {} is :=> {} seconds".format(func.__qualname__, execution_time))
             return res
 
         return wrapper
