@@ -13,6 +13,6 @@ def test_connection():
     with pytest.raises(Exception):
         BRabbit(host=1234, port='')
 
-    rabbit = BRabbit('/')
+    rabbit = BRabbit('/', port=0)
     assert rabbit
     assert isinstance(rabbit, rabbitpy.Connection)
