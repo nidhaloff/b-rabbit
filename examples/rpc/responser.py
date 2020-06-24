@@ -1,4 +1,4 @@
-from b_rabbit.b_rabbit import BRabbit
+from b_rabbit import BRabbit
 import time
 
 rabbit = BRabbit(host='localhost', port=5672)

@@ -1,4 +1,4 @@
-from b_rabbit.b_rabbit import BRabbit
+from b_rabbit import BRabbit
 
 
 rabbit = BRabbit(

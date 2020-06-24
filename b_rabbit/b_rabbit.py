@@ -7,9 +7,6 @@ from json import dumps
 import logging
 from helpers.logs import create_logger
 
-# logging.basicConfig(level=logging.INFO,
-#                     format='%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(threadName)s - %(message)s')
-#logger = logging.getLogger(__name__)
 logger = create_logger(__name__)
 
 
@@ -56,7 +53,7 @@ class BRabbit:
     def add_active_queues(self, queue):
         self._active_queues.append(queue)
 
-    #@calc_execution_time
+    # @calc_execution_time
     def _shutdown_gracefully(self):
 
         for activeQueue in self._active_queues:
@@ -136,7 +133,7 @@ class BRabbit:
 		Subscribe to events send by publisher
 		"""
 
-        #@calc_execution_time
+        # @calc_execution_time
         def __init__(self, b_rabbit, routing_key: str,
                      publisher_name: str, exchange_type: str = 'topic',
                      external: bool = False, important_subscription: bool = True, event_listener: Callable = None):
@@ -181,7 +178,7 @@ class BRabbit:
                 self.queue_name = queue.name
                 self.event_listener = event_listener
 
-        #@calc_execution_time
+        # @calc_execution_time
         def __subscribe(self):
             '''
 				start waiting on events. You may do this in parallel.
