@@ -31,4 +31,4 @@ def test_publisher(rabbit):
                                       exchange_type='topic',
                                       external=False)
     published = publisher.publish(routing_key='testing.test', payload='mock')
-    assert publisher is True
+    assert published is True
