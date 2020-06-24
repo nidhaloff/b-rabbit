@@ -8,6 +8,7 @@ from pytest_mock import mocker
 from b_rabbit import BRabbit
 import rabbitpy
 
+MSG = 'mock'
 
 @pytest.fixture
 def rabbit():
@@ -30,5 +31,19 @@ def test_publisher(rabbit):
                                       publisher_name='test',
                                       exchange_type='topic',
                                       external=False)
-    published = publisher.publish(routing_key='testing.test', payload='mock', important=False)
+    published = publisher.publish(routing_key='testing.test', payload=MSG, important=False)
     assert published is True
+
+
+def test_subscriber(rabbit):
+    def callback(msg):
+        assert msg == MSG
+
+    subscriber = rabbit.EventSubscriber(b_rabbit=rabbit,
+                                        routing_key='testing.test',
+                                        publisher_name='test',
+                                        exchange_type='topic',
+                                        external=False,
+                                        important_subscription=True,
+                                        event_listener=callback)
+    subscriber.subscribe_on_thread()
