@@ -54,29 +54,29 @@ def test_subscriber(rabbit):
     rabbit.close_connection()
 
 
-def test_requester(rabbit):
-    def callback(msg):
-        assert msg == RESPONSE_MSG
-
-    requester = rabbit.TaskRequesterSynchron(b_rabbit=rabbit,
-                                             executor_name='requester',
-                                             routing_key='requester.request',
-                                             response_listener=callback)
-    requester.request_task(payload=REQUEST_MSG)
-    rabbit.close_connection()
-
-
-def test_responser(rabbit):
-    def serve(server, msg):
-        assert msg == REQUEST_MSG
-        time.sleep(3)
-        server.send_return(payload=RESPONSE_MSG)
-
-    responser = rabbit.TaskExecutor(b_rabbit=rabbit,
-                                    executor_name='requester',
-                                    routing_key='requester.request',
-                                    task_listener=serve)
-    responser.run_task_on_thread()
-    with pytest.raises(Exception):
-        time.sleep(10)
-        rabbit.close_connection()
+# def test_requester(rabbit):
+#     def callback(msg):
+#         assert msg == RESPONSE_MSG
+#
+#     requester = rabbit.TaskRequesterSynchron(b_rabbit=rabbit,
+#                                              executor_name='requester',
+#                                              routing_key='requester.request',
+#                                              response_listener=callback)
+#     requester.request_task(payload=REQUEST_MSG)
+#     rabbit.close_connection()
+#
+#
+# def test_responser(rabbit):
+#     def serve(server, msg):
+#         assert msg == REQUEST_MSG
+#         time.sleep(3)
+#         server.send_return(payload=RESPONSE_MSG)
+#
+#     responser = rabbit.TaskExecutor(b_rabbit=rabbit,
+#                                     executor_name='requester',
+#                                     routing_key='requester.request',
+#                                     task_listener=serve)
+#     responser.run_task_on_thread()
+#     with pytest.raises(Exception):
+#         time.sleep(10)
+#         rabbit.close_connection()
