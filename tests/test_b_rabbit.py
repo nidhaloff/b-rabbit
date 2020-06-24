@@ -6,14 +6,13 @@ import pytest
 import mock
 from pytest_mock import mocker
 from b_rabbit import BRabbit
+import rabbitpy
 
 
 def test_connection():
     with pytest.raises(Exception):
         BRabbit(host=1234, port='')
 
-# def test_connection(mocker):
-#     mocker.patch.object(BRabbit)
-#     BRabbit.EventPublisher.publish = 120
-#     manager.method_under_test()
-#     manager.sub_method.assert_called_with('somestring', 1, 120)
+    rabbit = BRabbit()
+    assert rabbit
+    assert isinstance(rabbit, rabbitpy.Connection)
