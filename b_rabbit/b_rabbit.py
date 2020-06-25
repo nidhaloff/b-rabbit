@@ -47,7 +47,7 @@ class BRabbit:
         self.connection = rabbitpy.Connection('amqp://' + host + ':' + str(port))
 
     def close_connection(self):
-        # self._shutdown_gracefully()
+        self._shutdown_gracefully()
         self.connection.close()
 
     def add_active_queues(self, queue):
@@ -91,7 +91,7 @@ class BRabbit:
             except Exception as e:
                 logger.exception(e)
 
-        @calc_execution_time
+        # @calc_execution_time
         def publish(self, routing_key: str, payload: str, important: bool = True):
             """
 				Publish of internal event. All internal subscribers will receive it.
@@ -178,7 +178,6 @@ class BRabbit:
                 self.queue_name = queue.name
                 self.event_listener = event_listener
 
-        # @calc_execution_time
         def __subscribe(self):
             '''
 				start waiting on events. You may do this in parallel.
@@ -252,9 +251,17 @@ class BRabbit:
             self.b_rabbit, self.task_listener = b_rabbit, task_listener
             self.executor_name, self.exchange_name = executor_name, self.exchange_name
 
-            with b_rabbit.connection.channel() as channel:
+        def __enter__(self):
+            with self.b_rabbit.connection.channel() as channel:
                 exchange = rabbitpy.DirectExchange(channel=channel, name=self.exchange_name, durable=True)
                 exchange.declare()
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            try:
+                self.b_rabbit.close_connection()
+            except:
+                pass
 
         def __register_on_task(self, queue_name=''):
             """
@@ -284,7 +291,7 @@ class BRabbit:
                         logger.critical('Error in Custom Implementation of TaskExecuter')
                         logger.exception(e.args, exc_info=False)
 
-        @calc_execution_time
+        # @calc_execution_time
         def send_return(self, payload: str):
             """
 				Send return to TaskRequester which contains the results of task.
@@ -298,7 +305,6 @@ class BRabbit:
 
             response.publish(exchange='', routing_key=self.replyTo)
 
-        @calc_execution_time
         def run_task_on_thread(self, *thread_args, **thread_kwargs):
             """start task Executor on an independent Thread"""
 
@@ -340,7 +346,6 @@ class BRabbit:
                 # logger.info(
                 #     f'Exchange: {self.exchange_name} was successfully declared from task Requester: {executor_name} ')
 
-        @calc_execution_time
         def request_task(self, payload: str, queue_name=''):
             """
 				Do request task from executer.
@@ -368,8 +373,8 @@ class BRabbit:
                 for message in callback_queue.consume(prefetch=1):
                     message.ack()
 
-                    if self.corr_id == message.properties[
-                        'correlation_id']:  # check if correlation id fits to the call you did
+                    # check if correlation id fits to the call you did
+                    if self.corr_id == message.properties['correlation_id']:
                         self.response_listener(message.body)
                     return True
 
