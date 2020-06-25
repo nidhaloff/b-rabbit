@@ -3,10 +3,7 @@
 """The setup script."""
 
 from setuptools import setup, find_packages
-try:
-    from b_rabbit import __version__
-except:
-    pass
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -48,6 +45,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/nidhaloff/b_rabbit',
-    version=__version__,
+    version='1.0.3',
     zip_safe=False,
 )
