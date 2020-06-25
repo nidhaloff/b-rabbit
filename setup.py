@@ -3,6 +3,7 @@
 """The setup script."""
 
 from setuptools import setup, find_packages
+import b_rabbit
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -39,11 +40,11 @@ setup(
     include_package_data=True,
     keywords='b_rabbit',
     name='b_rabbit',
-    packages=find_packages(include=['b_rabbit', 'b_rabbit.*']),
+    packages=find_packages(include=['b_rabbit']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/nidhaloff/b_rabbit',
-    version='1.0.1',
+    version=b_rabbit.__version__,
     zip_safe=False,
 )
