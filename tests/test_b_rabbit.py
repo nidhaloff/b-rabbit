@@ -5,8 +5,6 @@
 import pytest
 from b_rabbit import BRabbit
 import rabbitpy
-import mock
-from unittest.mock import Mock
 
 MSG = 'mock'
 REQUEST_MSG = 'request_msg'
