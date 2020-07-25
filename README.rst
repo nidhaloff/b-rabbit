@@ -16,7 +16,8 @@ b_rabbit
 
 
 
-An abstract interface for RabbitMQ communication.
+RabbitMQ without headache.
+---------------------------
 
 b_rabbit is a RabbitMq Interface on top of rabbitpy to make implementing RabbitMQ messaging patterns easier. It is very useful especially
 inside large projects, in which many boilerplate code must be written.
@@ -29,13 +30,67 @@ pattern you want to use. it uses multithreading to asynchronously orchestrate be
 * Free software: MIT license
 * Documentation: https://b_rabbit.readthedocs.io.
 
-
 Features
 --------
 
-- it implements all RabbitMQ messaging patterns from work queues to RPCs.
+- it implements all RabbitMQ messaging patterns.
 - provides an easy high level API (take a look at the examples)
 - thread safe since it uses rabbitpy
+- implementation of the publish-subscribe pattern
+- implementation of the Remote procedure call pattern
+- safe message delivery
 
-Credits
--------
+Why you should use it
+----------------------
+- if you are having problems with other non thread safe libraries
+- if you want to develop fast by using a high level API
+- if you don't want to write much code and save much time
+- if you want to use multithreading
+- if you want to get started with RabbitMQ
+
+
+Quick Usage
+------------
+
+import the library:
+
+.. code-block:: python
+
+
+    from b_rabbit import BRabbit
+
+create a parent instance which provide a global rabbitMQ connection
+
+.. code-block:: python
+
+    rabbit = BRabbit(host='localhost', port=5672)
+
+now, just one liner to publish a message:
+
+.. code-block:: python
+
+    publisher = rabbit.EventPublisher(b_rabbit=rabbit,
+                                      publisher_name='pub').publish(routing_key='testing.test',
+                                                                    payload='Hello from publisher')
+
+
+
+or if you want to subscribe and listen to a certain topic:
+
+.. code-block:: python
+
+     def callback(msg):
+        # do something with the received msg from the publisher
+        print(f"msg received: {msg}")
+
+    # subscribe and run a listener in a thread
+
+    subscriber = rabbit.EventSubscriber(
+                                    b_rabbit=rabbit,
+                                    routing_key='testing.test',
+                                    publisher_name='pub',
+                                    event_listener=callback).subscribe_on_thread()
+
+Take a look in the examples folder for more. b_rabbit implements also the remote procedure call (RPC) pattern
+
+
