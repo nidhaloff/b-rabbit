@@ -27,7 +27,6 @@ b_rabbit
 .. image:: https://img.shields.io/pypi/status/b-rabbit
         :alt: PyPI - Status
         :target: https://pypi.python.org/pypi/b_rabbit
-.. image:: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FNidhalBaccouri   :alt: Twitter URL
 
 .. image:: https://img.shields.io/github/last-commit/nidhaloff/gpx_converter
         :alt: GitHub last commit
