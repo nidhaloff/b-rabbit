@@ -22,7 +22,7 @@ setup(
     author_email='nidhalbacc@gmail.com',
     python_requires='>=3.4',
     classifiers=[
-        'Development Status ::  5 - Production/Stable',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',

@@ -18,7 +18,8 @@ b_rabbit
         :alt: PyPI - Wheel
 .. image:: https://img.shields.io/pypi/dm/b-rabbit
         :alt: PyPI - Downloads
-
+.. image:: https://img.shields.io/pypi/status/b-rabbit
+        :alt: PyPI - Status
 
 
 
