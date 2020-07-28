@@ -14,12 +14,19 @@ b_rabbit
 
 .. image:: https://img.shields.io/pypi/pyversions/b-rabbit
         :alt: PyPI - Python Version
+        :target: https://b_rabbit.readthedocs.io/en/latest/?badge=latest
+
 .. image:: https://img.shields.io/pypi/wheel/b-rabbit
         :alt: PyPI - Wheel
+        :target: https://pypi.python.org/pypi/b_rabbit
+
 .. image:: https://img.shields.io/pypi/dm/b-rabbit
         :alt: PyPI - Downloads
+        :target: https://pypi.python.org/pypi/b_rabbit
+
 .. image:: https://img.shields.io/pypi/status/b-rabbit
         :alt: PyPI - Status
+        :target: https://pypi.python.org/pypi/b_rabbit
 
 
 
