@@ -37,7 +37,7 @@ b_rabbit
         :target: https://twitter.com/NidhalBaccouri
 
 .. image:: https://img.shields.io/badge/$-support-ff69b4.svg?style=flat
-   :target: https://paypal.me/pools/c/8reGqdBufj
+   :target: https://www.buymeacoffee.com/nidhaloff?new=1
 
 
 
