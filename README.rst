@@ -29,6 +29,17 @@ b_rabbit
         :target: https://pypi.python.org/pypi/b_rabbit
 .. image:: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FNidhalBaccouri   :alt: Twitter URL
 
+.. image:: https://img.shields.io/github/last-commit/nidhaloff/gpx_converter
+        :alt: GitHub last commit
+        :target: https://pypi.python.org/pypi/b_rabbit
+
+.. image:: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FNidhalBaccouri
+        :alt: Twitter URL
+        :target: https://twitter.com/NidhalBaccouri
+
+.. image:: https://img.shields.io/badge/$-support-ff69b4.svg?style=flat
+   :target: https://paypal.me/pools/c/8reGqdBufj
+
 
 
 RabbitMQ without headache.
