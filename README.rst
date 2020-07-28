@@ -11,7 +11,13 @@ b_rabbit
 
 .. image:: https://readthedocs.org/projects/b_rabbit/badge/?version=latest
         :target: https://b_rabbit.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+
+.. image:: https://img.shields.io/pypi/pyversions/b-rabbit
+        :alt: PyPI - Python Version
+.. image:: https://img.shields.io/pypi/wheel/b-rabbit
+        :alt: PyPI - Wheel
+.. image:: https://img.shields.io/pypi/dm/b-rabbit
+        :alt: PyPI - Downloads
 
 
 
@@ -40,14 +46,21 @@ Features
 - implementation of the Remote procedure call pattern
 - safe message delivery
 
-Why you should use it
+When you should use it
 ----------------------
-- if you are having problems with other non thread safe libraries
+- if you are having problems with other non thread safe libraries (like I did)
 - if you want to develop fast by using a high level API
 - if you don't want to write much code and save much time
 - if you want to use multithreading
 - if you want to get started with RabbitMQ
 
+Why you should use it
+----------------------
+- High level of abstraction
+- Simple syntax and readability improvement
+- Scalablity (since it uses multiple channels but only one connection)
+- Asynchronous fast messaging
+- Code reusability
 
 Quick Usage
 ------------
@@ -90,6 +103,9 @@ or if you want to subscribe and listen to a certain topic:
                                     routing_key='testing.test',
                                     publisher_name='pub',
                                     event_listener=callback).subscribe_on_thread()
+
+Further
+--------
 
 Take a look in the examples folder for more. b_rabbit implements also the remote procedure call (RPC) pattern
 
