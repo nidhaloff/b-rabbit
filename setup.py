@@ -20,7 +20,7 @@ test_requirements = ['pytest>=3', ]
 setup(
     author="Nidhal Baccouri",
     author_email='nidhalbacc@gmail.com',
-    python_requires='>=3.0',
+    python_requires='>=3.4',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
