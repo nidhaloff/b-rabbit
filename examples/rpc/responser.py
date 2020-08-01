@@ -16,10 +16,5 @@ taskExecuter = rabbit.TaskExecutor(b_rabbit=rabbit,
                                    routing_key='WebsiteAutomationService.createNewGeofence',
                                    task_listener=taskListener)
 
-try:
-    with taskExecuter as executor:
-        taskExecuter.run_task_on_thread()
-except:
-    pass
-# taskExecuter.task_thread.daemon = True
-# rabbit.connection.close()
+
+taskExecuter.run_task_on_thread()

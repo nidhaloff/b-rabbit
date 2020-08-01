@@ -124,6 +124,53 @@ or if you want to subscribe and listen to a certain topic:
                                     publisher_name='pub',
                                     event_listener=callback).subscribe_on_thread()
 
+Advanced Usage using RPC
+--------------------------
+
+- task requester
+
+.. code-block:: python
+
+    from b_rabbit import BRabbit
+
+
+    def taskResponseListener(body):
+        print('Task Response received')
+        print(str(body))
+
+
+    rabbit = BRabbit(host='localhost', port=5672)
+    taskRequesterSynchron = rabbit.TaskRequesterSynchron(b_rabbit=rabbit,
+                                                         executor_name='test',
+                                                         routing_key='testing.test',
+                                                         response_listener=taskResponseListener)
+
+    taskRequesterSynchron.request_task('msg from requester')
+    rabbit.close_connection()
+
+- task responser (server)
+
+.. code-block:: python
+
+    from b_rabbit import BRabbit
+    import time
+
+    rabbit = BRabbit(host='localhost', port=5672)
+
+
+    def taskListener(server, body):
+        print('Task Request received')
+        print(str(body))
+        time.sleep(5)
+        server.send_return(payload="return this value to requester")
+
+
+    taskExecuter = rabbit.TaskExecutor(b_rabbit=rabbit,
+                                       executor_name='test',
+                                       routing_key='testing.test',
+                                       task_listener=taskListener).run_task_on_thread()
+
+
 Further
 --------
 
