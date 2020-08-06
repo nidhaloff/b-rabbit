@@ -47,17 +47,26 @@ class BRabbit:
         self.connection = rabbitpy.Connection('amqp://' + host + ':' + str(port))
 
     def close_connection(self):
-        self._shutdown_gracefully()
-        self.connection.close()
+        try:
+            self._shutdown_gracefully()
+            self.connection.close()
+        except Exception as e:
+            logger.exception(e.args)
 
     def add_active_queues(self, queue):
-        self._active_queues.append(queue)
+        try:
+            self._active_queues.append(queue)
+        except Exception as e:
+            logger.exception(e.args)
 
     # @calc_execution_time
-    def _shutdown_gracefully(self):
-
-        for activeQueue in self._active_queues:
-            activeQueue.stop_consuming()
+    def _shutdown_gracefully(self, delete=False):
+        try:
+            for activeQueue in self._active_queues:
+                if delete:
+                    activeQueue.delete()
+        except Exception as e:
+            logger.exception(e.args)
 
     class EventPublisher:
         """
@@ -89,7 +98,7 @@ class BRabbit:
                     logger.info('Exchange is declared with the name: {}'.format(self.exchange_name))
 
             except Exception as e:
-                logger.exception(e)
+                logger.debug(e)
 
         # @calc_execution_time
         def publish(self, routing_key: str, payload: str, important: bool = True):
@@ -126,7 +135,7 @@ class BRabbit:
                     "More Description of the Exception => {}".format(e.args))
 
             except Exception as e:
-                logger.exception(e.args, exc_info=False)
+                logger.debug(e.args, exc_info=False)
 
     class EventSubscriber:
         """
@@ -251,18 +260,6 @@ class BRabbit:
             self.b_rabbit, self.task_listener = b_rabbit, task_listener
             self.executor_name, self.exchange_name = executor_name, self.exchange_name
 
-        def __enter__(self):
-            with self.b_rabbit.connection.channel() as channel:
-                exchange = rabbitpy.DirectExchange(channel=channel, name=self.exchange_name, durable=True)
-                exchange.declare()
-            return self
-
-        def __exit__(self, exc_type, exc_val, exc_tb):
-            try:
-                self.b_rabbit.close_connection()
-            except:
-                pass
-
         def __register_on_task(self, queue_name=''):
             """
 				Registers task. This might be called in parallel.
@@ -281,7 +278,7 @@ class BRabbit:
                     self.channel = channel
                     self.corr_id, self.replyTo = message.properties['correlation_id'], message.properties['reply_to']
                     self.msg, self.deliveryTag = message, message.delivery_tag
-                    message.pprint()
+                    # message.pprint()
                     message.ack()
 
                     try:
@@ -289,7 +286,7 @@ class BRabbit:
 
                     except Exception as e:
                         logger.critical('Error in Custom Implementation of TaskExecuter')
-                        logger.exception(e.args, exc_info=False)
+                        logger.debug(e.args, exc_info=False)
 
         # @calc_execution_time
         def send_return(self, payload: str):
@@ -311,7 +308,7 @@ class BRabbit:
             task_thread = threading.Thread(target=self.__register_on_task, *thread_args, **thread_kwargs)
             task_thread.start()
             if task_thread.is_alive():
-                logger.info("Task Executor is running on The Thread: {}".format(task_thread.name))
+                logger.debug("Task Executor is running on The Thread: {}".format(task_thread.name))
 
     class TaskRequesterSynchron:
         '''
