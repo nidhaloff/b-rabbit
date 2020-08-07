@@ -278,7 +278,6 @@ class BRabbit:
                     self.channel = channel
                     self.corr_id, self.replyTo = message.properties['correlation_id'], message.properties['reply_to']
                     self.msg, self.deliveryTag = message, message.delivery_tag
-                    # message.pprint()
                     message.ack()
 
                     try:
@@ -335,13 +334,14 @@ class BRabbit:
             with b_rabbit.connection.channel() as channel:
                 self.channel, self.routing_key = channel, routing_key
                 self.exchange_name, self.response_listener = executor_name + '_tasks', response_listener
-                self.exchange = rabbitpy.DirectExchange(channel=channel,
-                                                        name=self.exchange_name,
-                                                        durable=True)
+                self.exchange = rabbitpy.Exchange(channel=channel,
+                                                  exchange_type='direct',
+                                                  name=self.exchange_name,
+                                                  durable=True)
 
                 self.exchange.declare()
-                # logger.info(
-                #     f'Exchange: {self.exchange_name} was successfully declared from task Requester: {executor_name} ')
+                logger.debug(
+                    f'Exchange: {self.exchange_name} was successfully declared from task Requester: {executor_name} ')
 
         def request_task(self, payload: str, queue_name=''):
             """
@@ -373,7 +373,6 @@ class BRabbit:
                     # check if correlation id fits to the call you did
                     if self.corr_id == message.properties['correlation_id']:
                         self.response_listener(message.body)
-                    return True
 
     class TaskRequesterAsynchron:
         """
