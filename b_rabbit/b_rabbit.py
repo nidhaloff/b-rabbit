@@ -341,7 +341,7 @@ class BRabbit:
 
                 self.exchange.declare()
                 logger.debug(
-                    f'Exchange: {self.exchange_name} was successfully declared from task Requester: {executor_name} ')
+                    'Exchange: {} was successfully declared from task Requester: {}'.format('self.exchange_name', 'executor_name'))
 
         def request_task(self, payload: str, queue_name=''):
             """
