@@ -20,15 +20,17 @@ b_rabbit
         :alt: PyPI - Wheel
         :target: https://pypi.python.org/pypi/b_rabbit
 
-.. image:: https://img.shields.io/pypi/dm/b-rabbit
-        :alt: PyPI - Downloads
-        :target: https://pypi.python.org/pypi/b_rabbit
-
 .. image:: https://img.shields.io/pypi/status/b-rabbit
         :alt: PyPI - Status
         :target: https://pypi.python.org/pypi/b_rabbit
 
-.. image:: https://img.shields.io/github/last-commit/nidhaloff/gpx_converter
+.. image:: https://pepy.tech/badge/b-rabbit
+    :target: https://pepy.tech/project/b-rabbit
+
+.. image:: https://pepy.tech/badge/b-rabbit/month
+    :target: https://pepy.tech/project/b-rabbit/month
+
+.. image:: https://img.shields.io/github/last-commit/nidhaloff/b-rabbit
         :alt: GitHub last commit
         :target: https://pypi.python.org/pypi/b_rabbit
 
