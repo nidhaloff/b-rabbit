@@ -38,9 +38,6 @@ b_rabbit
         :alt: Twitter URL
         :target: https://twitter.com/NidhalBaccouri
 
-.. image:: https://img.shields.io/badge/$-buy%20me%20a%20coffee-ff69b4.svg?style=social
-   :target: https://www.buymeacoffee.com/nidhaloff?new=1
-
 
 
 
