@@ -2,6 +2,10 @@
 b_rabbit
 ========
 
+.. image:: assets/b-rabbit.png
+    :width: 100
+    :align: center
+    :alt: b-rabbit-icon
 
 .. image:: https://img.shields.io/pypi/v/b_rabbit.svg
         :target: https://pypi.python.org/pypi/b_rabbit
