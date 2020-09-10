@@ -1,5 +1,5 @@
 ========
-b_rabbit
+b-rabbit
 ========
 
 .. image:: assets/b-rabbit.png
@@ -7,26 +7,26 @@ b_rabbit
     :align: center
     :alt: b-rabbit-icon
 
-.. image:: https://img.shields.io/pypi/v/b_rabbit.svg
-        :target: https://pypi.python.org/pypi/b_rabbit
+.. image:: https://img.shields.io/pypi/v/b-rabbit.svg
+        :target: https://pypi.python.org/pypi/b-rabbit
 
 .. image:: https://img.shields.io/travis/nidhaloff/b_rabbit.svg
         :target: https://travis-ci.com/nidhaloff/b_rabbit
 
-.. image:: https://readthedocs.org/projects/b_rabbit/badge/?version=latest
-        :target: https://b_rabbit.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/b-rabbit/badge/?version=latest
+        :target: https://b-rabbit.readthedocs.io/en/latest/?badge=latest
 
 .. image:: https://img.shields.io/pypi/pyversions/b-rabbit
         :alt: PyPI - Python Version
-        :target: https://b_rabbit.readthedocs.io/en/latest/?badge=latest
+        :target: https://b-rabbit.readthedocs.io/en/latest/?badge=latest
 
 .. image:: https://img.shields.io/pypi/wheel/b-rabbit
         :alt: PyPI - Wheel
-        :target: https://pypi.python.org/pypi/b_rabbit
+        :target: https://pypi.python.org/pypi/b-rabbit
 
 .. image:: https://img.shields.io/pypi/status/b-rabbit
         :alt: PyPI - Status
-        :target: https://pypi.python.org/pypi/b_rabbit
+        :target: https://pypi.python.org/pypi/b-rabbit
 
 .. image:: https://pepy.tech/badge/b-rabbit
     :target: https://pepy.tech/project/b-rabbit
@@ -36,7 +36,7 @@ b_rabbit
 
 .. image:: https://img.shields.io/github/last-commit/nidhaloff/b-rabbit
         :alt: GitHub last commit
-        :target: https://pypi.python.org/pypi/b_rabbit
+        :target: https://pypi.python.org/pypi/b-rabbit
 
 .. image:: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FNidhalBaccouri
         :alt: Twitter URL
@@ -48,7 +48,7 @@ b_rabbit
 RabbitMQ without headache.
 ---------------------------
 
-b_rabbit is a RabbitMq Interface on top of rabbitpy to make implementing RabbitMQ messaging patterns easier. It is very useful especially
+b-rabbit is a RabbitMq Interface on top of rabbitpy to make implementing RabbitMQ messaging patterns easier. It is very useful especially
 inside large projects, in which many boilerplate code must be written.
 it uses a parent wrapper class that wrap all connections and classes definitions of different messaging patterns,
 then using the patterns is pretty straightforward by creating instances from the parent class depending on the
@@ -57,7 +57,7 @@ pattern you want to use. it uses multithreading to asynchronously orchestrate be
 
 
 * Free software: MIT license
-* Documentation: https://b_rabbit.readthedocs.io.
+* Documentation: https://b-rabbit.readthedocs.io.
 
 Features
 --------
