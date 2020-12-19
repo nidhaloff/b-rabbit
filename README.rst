@@ -31,13 +31,6 @@ b-rabbit
 .. image:: https://pepy.tech/badge/b-rabbit
     :target: https://pepy.tech/project/b-rabbit
 
-.. image:: https://pepy.tech/badge/b-rabbit/month
-    :target: https://pepy.tech/project/b-rabbit/month
-
-.. image:: https://img.shields.io/github/last-commit/nidhaloff/b-rabbit
-        :alt: GitHub last commit
-        :target: https://pypi.python.org/pypi/b-rabbit
-
 .. image:: https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FNidhalBaccouri
         :alt: Twitter URL
         :target: https://twitter.com/NidhalBaccouri
