@@ -11,7 +11,7 @@ b-rabbit
         :target: https://pypi.python.org/pypi/b-rabbit
 
 .. image:: https://img.shields.io/travis/nidhaloff/b_rabbit.svg
-        :target: https://travis-ci.com/nidhaloff/b_rabbit
+        :target: https://travis-ci.com/nidhaloff/b-rabbit
 
 .. image:: https://readthedocs.org/projects/b-rabbit/badge/?version=latest
         :target: https://b-rabbit.readthedocs.io/en/latest/?badge=latest
