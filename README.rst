@@ -41,11 +41,11 @@ b-rabbit
 RabbitMQ without headache.
 ---------------------------
 
-b-rabbit is a RabbitMq Interface on top of rabbitpy to make implementing RabbitMQ messaging patterns easier. It is very useful especially
+b-rabbit is a RabbitMq client library that aims to make interfacing with RabbitMQ easier. It is very useful especially
 inside large projects, in which many boilerplate code must be written.
-it uses a parent wrapper class that wrap all connections and classes definitions of different messaging patterns,
-then using the patterns is pretty straightforward by creating instances from the parent class depending on the
-pattern you want to use. it uses multithreading to asynchronously orchestrate between multiple subscription and RPCs.
+
+I started this project when I was working on a large microservices-based project in a large team.
+I decided to open-source the project afterwards.
 
 
 
@@ -57,10 +57,7 @@ Features
 
 - it implements all RabbitMQ messaging patterns.
 - provides an easy high level API (take a look at the examples)
-- thread safe since it uses rabbitpy
-- implementation of the publish-subscribe pattern
-- implementation of the Remote procedure call pattern
-- safe message delivery
+- thread safe
 
 When you should use it
 ----------------------
@@ -68,15 +65,7 @@ When you should use it
 - if you want to develop fast by using a high level API
 - if you don't want to write much code and save much time
 - if you want to use multithreading
-- if you want to get started with RabbitMQ
 
-Why you should use it
-----------------------
-- High level of abstraction
-- Simple syntax and readability improvement
-- Scalablity (since it uses multiple channels but only one connection)
-- Asynchronous fast messaging
-- Code reusability
 
 Quick Usage
 ------------
