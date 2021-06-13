@@ -10,5 +10,3 @@ twine
 rabbitpy
 pytest
 pytest-runner
-pytest-concurrent
-junit-xml
