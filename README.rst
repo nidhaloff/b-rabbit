@@ -24,9 +24,6 @@ b-rabbit
         :alt: PyPI - Wheel
         :target: https://pypi.python.org/pypi/b-rabbit
 
-.. image:: https://img.shields.io/pypi/status/b-rabbit
-        :alt: PyPI - Status
-        :target: https://pypi.python.org/pypi/b-rabbit
 
 .. image:: https://pepy.tech/badge/b-rabbit
     :target: https://pepy.tech/project/b-rabbit
