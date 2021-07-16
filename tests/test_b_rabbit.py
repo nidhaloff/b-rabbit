@@ -40,7 +40,7 @@ def test_publisher(rabbit):
 def test_subscriber(rabbit):
     def callback(msg):
         assert msg.body == MSG
-        assert msg.properties["correlation_id"] = "test_id"
+        assert msg.properties["correlation_id"] == "test_id"
 
     subscriber = rabbit.EventSubscriber(b_rabbit=rabbit,
                                         routing_key='testing.test',
