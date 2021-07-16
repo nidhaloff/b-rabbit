@@ -28,17 +28,19 @@ def test_rabbitmq_connection(rabbit):
 
 
 def test_publisher(rabbit):
+    properties = BRabbit.Properties(correlation_id = "test_id")
     publisher = rabbit.EventPublisher(b_rabbit=rabbit,
                                       publisher_name='test',
                                       exchange_type='topic',
                                       external=False)
-    published = publisher.publish(routing_key='testing.test', payload=MSG, important=False)
+    published = publisher.publish(routing_key='testing.test', payload=MSG, important=False, properties=properties.properties_dict)
     assert published is True
 
 
 def test_subscriber(rabbit):
     def callback(msg):
-        assert msg == MSG
+        assert msg.body == MSG
+        assert msg.properties["correlation_id"] = "test_id"
 
     subscriber = rabbit.EventSubscriber(b_rabbit=rabbit,
                                         routing_key='testing.test',
