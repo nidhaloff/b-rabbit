@@ -119,7 +119,6 @@ class BRabbit:
                         if not external
                         else "External" + publisher_name + "_events"
                     )
-                    print("publishing to : {}".format(self.exchange_name))
                     self.exchange = rabbitpy.Exchange(
                         channel=channel,
                         name=self.exchange_name,
@@ -281,7 +280,6 @@ class BRabbit:
                 # logger.info('{queue.name} was successfully declared from subscriber: {queue_name}')
                 queue.bind(self.exchange_name, routing_key)
                 self.queue_name = queue.name
-                print("Consumer queue name : {}".format(queue.name))
                 self.event_listener = event_listener
 
         def __subscribe(self):
