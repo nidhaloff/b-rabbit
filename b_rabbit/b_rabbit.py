@@ -171,7 +171,7 @@ class BRabbit:
                     published = message.publish(
                         exchange=self.exchange,
                         routing_key=routing_key,
-                        mandatory=important,
+                        mandatory=important
                     )
 
                     if not published:
