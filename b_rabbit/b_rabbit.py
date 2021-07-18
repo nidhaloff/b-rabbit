@@ -188,7 +188,6 @@ class BRabbit:
                                 self.exchange_name
                             )
                         )
-                        channel.close()
                 return published
 
             except rabbitpy.exceptions.MessageReturnedException as e:
