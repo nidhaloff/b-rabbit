@@ -114,6 +114,7 @@ class BRabbit:
                 with b_rabbit.connection.channel() as channel:
 
                     self.channel = channel
+                    self.channel.enalbe_publisher_confirms()
                     self.exchange_name = (
                         publisher_name + "_events"
                         if not external
