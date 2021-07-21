@@ -29,7 +29,6 @@ def test_publisher(rabbit):
 
 
 def test_subscriber(rabbit):
-    print("Starting test subscriber...")
     def callback(msg):
         assert msg.body.decode('UTF-8') == MSG
         assert msg.properties["correlation_id"] == "test_id"
