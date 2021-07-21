@@ -126,6 +126,9 @@ class BRabbit:
 				:param str payload: Payload of event
 				:param str important: indicate whether the publishing important or not,
 									if yes it will set the mandatory publishing Feature
+                :param BRabbit.Properties properties: properties object containing the
+                                    properties dictionary that will be loaded into the
+                                    rabbitpy.message object.
 			"""
 
             try:
@@ -250,6 +253,7 @@ class BRabbit:
         def __subscribe(self):
             '''
 				start waiting on events. You may do this in parallel.
+                passes rabbitpy.message objects to event_listener.
 			'''
             with self.b_rabbit.connection.channel() as channel:
                 queue = rabbitpy.Queue(channel, self.queue_name)
@@ -468,6 +472,17 @@ class BRabbit:
             thread.start()
     class Properties:
             def __init__(self, **kwargs):
+                """
+                :param key=value **kwargs: Assign rabbitpy.message.properties values here.
+                
+                                           Ex: p = BRabbit.Properties(correlation_id = "val").
+                                           
+                                           Provide this object as an argument to an
+                                           EventPublisher.publish() call to add 
+                                           properties to your message. See rabbitpy
+                                           documentation for all properties values
+                                           and types.
+                """
                 self.properties_dict = {}
                 for key, value in kwargs.items():
                     self.properties_dict[key] = value
