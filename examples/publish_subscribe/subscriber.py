@@ -1,9 +1,10 @@
 from b_rabbit import BRabbit
 
 
-def event_listener(body):
+def event_listener(msg):
     print('Event received')
-    print(str(body))
+    print("Message body is: " + msg.body)
+    print("Message properties are: " + str(msg.properties))
 
 
 rabbit = BRabbit(host='localhost', port=5672)
