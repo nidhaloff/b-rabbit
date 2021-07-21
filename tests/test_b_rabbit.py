@@ -3,7 +3,6 @@
 import pytest
 from b_rabbit import BRabbit
 import rabbitpy
-import time
 MSG = 'test'
 REQUEST_MSG = 'request_msg'
 RESPONSE_MSG = 'response_msg'
