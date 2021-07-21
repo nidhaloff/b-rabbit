@@ -31,20 +31,31 @@ def calc_execution_time(func):
 
         logger.exception(e.args, exc_info=True)
 
-
 class BRabbit:
     connection = None
     _active_queues = []
+    def __init__(
+            self,
+            host: str = "localhost",
+            port: int = 5672,
+            user: str = None,
+            password: str = None,
+        ):
 
-    def __init__(self, host: str = 'localhost', port: int = 5672):
+            """
+            Wrapper class to store the connection to server globally.
+            :param str host: Hostname of RabbitMQ Server
+            :param int port: Port of RabbitMQ Server
+            """
 
-        """
-		Wrapper class to store the connection to server globally.
-		:param str host: Hostname of RabbitMQ Server
-		:param int port: Port of RabbitMQ Server
-		"""
-
-        self.connection = rabbitpy.Connection('amqp://' + host + ':' + str(port))
+            if user != None:
+                self.connection = rabbitpy.Connection(
+                    "amqp://{}:{}@{}:{}/".format(user, password, host, str(port))
+                )
+            else:
+                self.connection = rabbitpy.Connection(
+                    "amqp://{}:{}".format(host, str(port))
+                )
 
     def close_connection(self):
         try:
@@ -101,7 +112,13 @@ class BRabbit:
                 logger.debug(e)
 
         # @calc_execution_time
-        def publish(self, routing_key: str, payload: str, important: bool = True):
+        def publish(
+            self,
+            routing_key: str,
+            payload: str,
+            important: bool = True,
+            properties=None
+        ):
             """
 				Publish of internal event. All internal subscribers will receive it.
 				Parameters:
@@ -114,9 +131,22 @@ class BRabbit:
             try:
                 with self.b_rabbit.connection.channel() as channel:
                     channel.enable_publisher_confirms()
-                    message = rabbitpy.Message(channel=channel, body_value=dumps(payload))
+                    if properties == None:
+                        message = rabbitpy.Message(
+                            channel=channel, body_value=payload
+                        )
+                    else:
+                        message = rabbitpy.Message(
+                            channel=channel,
+                            body_value=payload,
+                            properties=properties.properties_dict
+                        )
 
-                    published = message.publish(exchange=self.exchange, routing_key=routing_key, mandatory=important)
+                    published = message.publish(
+                        exchange=self.exchange,
+                        routing_key=routing_key,
+                        mandatory=important,
+                    )
 
                     if not published:
 
@@ -124,7 +154,11 @@ class BRabbit:
                             'message sent from: {} but RabbitMQ indicates Message publishing failure'.format(self.exchange_name))
                     else:
 
-                        logger.info('message sent from: {} and received successfully from RabbitMQ'.format(self.exchange_name))
+                        logger.info(
+                            "message sent from: {} and received successfully from RabbitMQ".format(
+                                self.exchange_name
+                            )
+                        )
                 return published
 
             except rabbitpy.exceptions.MessageReturnedException as e:
@@ -143,9 +177,17 @@ class BRabbit:
 		"""
 
         # @calc_execution_time
-        def __init__(self, b_rabbit, routing_key: str,
-                     publisher_name: str, exchange_type: str = 'topic',
-                     external: bool = False, important_subscription: bool = True, event_listener: Callable = None):
+        def __init__(
+            self,
+            b_rabbit,
+            routing_key: str,
+            publisher_name: str,
+            exchange_type: str = "topic",
+            routing_key_only: bool = False,
+            external: bool = False,
+            important_subscription: bool = True,
+            event_listener: Callable = None,
+        ):
             """
 				Subscribe to events send by publisher
 				Parameters:
@@ -170,13 +212,31 @@ class BRabbit:
                                                   durable=True)
                 self.exchange.declare()
                 logger.info(
-                    'Exchange is declared Successfully from Subscriber: {} | with the name: {}'.format(__name__,self.exchange_name))
-
-                subscriber_name = self.exchange_name + '_' + routing_key + '_' + self.__get_subscriber_name() + '_queue'
-
-                logger.info('subscriber name: {}'.format(subscriber_name))
+                    "Exchange is declared Successfully from Subscriber: {} | with the name: {}".format(
+                        __name__, self.exchange_name
+                    )
+                )
+                if routing_key_only:
+                    queue_name = routing_key
+                else:
+                    queue_name = (
+                        self.exchange_name
+                        + "_"
+                        + routing_key
+                        + "_"
+                        + self.__get_subscriber_name()
+                        + "_queue"
+                    )
+                logger.info("subscriber name: {}".format(queue_name))
+                queue = rabbitpy.Queue(
+                    channel,
+                    name=queue_name,
+                    durable=important_subscription,
+                    message_ttl=self.__msg_lifetime(),
+                    exclusive=False,
+                )
                 queue = rabbitpy.Queue(channel,
-                                       name=subscriber_name,
+                                       name=queue_name,
                                        durable=important_subscription,
                                        message_ttl=self.__msg_lifetime(),
                                        exclusive=False)
@@ -198,7 +258,7 @@ class BRabbit:
                 for message in queue.consume():
                     message.pprint(True)
                     message.ack()
-                    self.event_listener(message.body)
+                    self.event_listener(message)
 
         def subscribe_on_thread(self, *thread_args, **thread_kwargs):
             """start Subscriber on an independent Thread"""
@@ -406,3 +466,8 @@ class BRabbit:
             assert type(payload) is str, "payload of the request_task method must be of type string"
             thread = threading.Thread(target=lambda: self.task_requester.request_task(payload=payload))
             thread.start()
+    class Properties:
+            def __init__(self, **kwargs):
+                self.properties_dict = {}
+                for key, value in kwargs.items():
+                    self.properties_dict[key] = value
