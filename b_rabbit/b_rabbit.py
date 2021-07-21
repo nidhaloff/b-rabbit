@@ -14,7 +14,6 @@ def calc_execution_time(func):
     """calculate execution Time of a function"""
 
     from timeit import default_timer
-
     try:
 
         def wrapper(*args, **kwargs):
@@ -23,11 +22,7 @@ def calc_execution_time(func):
             res = func(*args, **kwargs)
             after = default_timer()
             execution_time = after - before
-            print(
-                "execution time of the Function {} is :=> {} seconds".format(
-                    func.__qualname__, execution_time
-                )
-            )
+            print("execution time of the Function {} is :=> {} seconds".format(func.__qualname__, execution_time))
             return res
 
         return wrapper
@@ -36,32 +31,31 @@ def calc_execution_time(func):
 
         logger.exception(e.args, exc_info=True)
 
-
 class BRabbit:
     connection = None
     _active_queues = []
-
     def __init__(
-        self,
-        host: str = "localhost",
-        port: int = 5672,
-        user: str = None,
-        password: str = None,
-    ):
+            self,
+            host: str = "localhost",
+            port: int = 5672,
+            user: str = None,
+            password: str = None,
+        ):
 
-        """
-		Wrapper class to store the connection to server globally.
-		:param str host: Hostname of RabbitMQ Server
-		:param int port: Port of RabbitMQ Server
-		"""
-        if (user is not None) and (password is not None):
-            self.connection = rabbitpy.Connection(
-                "amqp://{}:{}@{}:{}/".format(user, password, host, str(port))
-            )
-        else:
-            self.connection = rabbitpy.Connection(
-                "amqp://{}:{}".format(host, str(port))
-            )
+            """
+            Wrapper class to store the connection to server globally.
+            :param str host: Hostname of RabbitMQ Server
+            :param int port: Port of RabbitMQ Server
+            """
+
+            if user != None:
+                self.connection = rabbitpy.Connection(
+                    "amqp://{}:{}@{}:{}/".format(user, password, host, str(port))
+                )
+            else:
+                self.connection = rabbitpy.Connection(
+                    "amqp://{}:{}".format(host, str(port))
+                )
 
     def close_connection(self):
         try:
@@ -91,13 +85,7 @@ class BRabbit:
 			Internal and External Publishers are now together in one Implementation
 		"""
 
-        def __init__(
-            self,
-            b_rabbit,
-            publisher_name: str,
-            exchange_type: str = "topic",
-            external: bool = False,
-        ):
+        def __init__(self, b_rabbit, publisher_name: str, exchange_type: str = 'topic', external: bool = False):
             """
 			Internal event publisher, which sends events to all subscribers.
 			Parameters:
@@ -105,32 +93,20 @@ class BRabbit:
 			"""
 
             if not b_rabbit.connection:
-                raise Exception(
-                    "Create Instance of Class RabbitMqCommunicationInterface first"
-                )
+                raise Exception('Create Instance of Class RabbitMqCommunicationInterface first')
 
             try:
                 self.b_rabbit = b_rabbit
                 with b_rabbit.connection.channel() as channel:
 
                     self.channel = channel
-                    self.exchange_name = (
-                        publisher_name + "_events"
-                        if not external
-                        else "External" + publisher_name + "_events"
-                    )
-                    self.exchange = rabbitpy.Exchange(
-                        channel=channel,
-                        name=self.exchange_name,
-                        exchange_type=exchange_type,
-                        durable=True,
-                    )
+                    self.exchange_name = publisher_name + '_events' if not external else 'External' + publisher_name + '_events'
+                    self.exchange = rabbitpy.Exchange(channel=channel,
+                                                      name=self.exchange_name,
+                                                      exchange_type=exchange_type,
+                                                      durable=True)
                     self.exchange.declare()
-                    logger.info(
-                        "Exchange is declared with the name: {}".format(
-                            self.exchange_name
-                        )
-                    )
+                    logger.info('Exchange is declared with the name: {}'.format(self.exchange_name))
 
             except Exception as e:
                 logger.debug(e)
@@ -141,7 +117,7 @@ class BRabbit:
             routing_key: str,
             payload: str,
             important: bool = True,
-            properties=None,
+            properties=None
         ):
             """
 				Publish of internal event. All internal subscribers will receive it.
@@ -150,8 +126,6 @@ class BRabbit:
 				:param str payload: Payload of event
 				:param str important: indicate whether the publishing important or not,
 									if yes it will set the mandatory publishing Feature
-                :param properties object: b_rabbit.properties object containing dictionary for rabbitpy 
-                                          Message.properties values. --OPTIONAL
 			"""
 
             try:
@@ -159,13 +133,13 @@ class BRabbit:
                     channel.enable_publisher_confirms()
                     if properties == None:
                         message = rabbitpy.Message(
-                            channel=channel, body_value=dumps(payload)
+                            channel=channel, body_value=payload
                         )
                     else:
                         message = rabbitpy.Message(
                             channel=channel,
-                            properties=properties.properties_dict,
-                            body_value=dumps(payload),
+                            body_value=payload,
+                            properties=properties.properties_dict
                         )
 
                     published = message.publish(
@@ -177,10 +151,7 @@ class BRabbit:
                     if not published:
 
                         logger.warning(
-                            "message sent from: {} but RabbitMQ indicates Message publishing failure".format(
-                                self.exchange_name
-                            )
-                        )
+                            'message sent from: {} but RabbitMQ indicates Message publishing failure'.format(self.exchange_name))
                     else:
 
                         logger.info(
@@ -188,7 +159,6 @@ class BRabbit:
                                 self.exchange_name
                             )
                         )
-                        channel.close()
                 return published
 
             except rabbitpy.exceptions.MessageReturnedException as e:
@@ -196,8 +166,7 @@ class BRabbit:
                     "Because of the Mandatory Publishing, a Consumer Queue must already be binded to the Exchange"
                     " to make sure that the published message will be sooner or later consumed and we will not lose it"
                     " so make sure that the subscriber Queue is already bounded to the Publisher  \n"
-                    "More Description of the Exception => {}".format(e.args)
-                )
+                    "More Description of the Exception => {}".format(e.args))
 
             except Exception as e:
                 logger.debug(e.args, exc_info=False)
@@ -227,29 +196,20 @@ class BRabbit:
 				:param str exchange_type: Type of exchange
 				:param bool external: Is Publisher external?
 				:param callable event_listener: User event listener (eventListener(body))
-                :param bool routing_key_only: Queue name is routing key?
 			"""
 
             if not b_rabbit.connection:
-                raise Exception(
-                    "Create Instance of Class RabbitMqCommunicationInterface first"
-                )
+                raise Exception('Create Instance of Class RabbitMqCommunicationInterface first')
 
             self.b_rabbit = b_rabbit
             self.publisher_name = publisher_name
             with b_rabbit.connection.channel() as channel:
-                self.exchange_name = (
-                    "External_" + publisher_name + "_events"
-                    if external
-                    else publisher_name + "_events"
-                )
+                self.exchange_name = 'External_' + publisher_name + '_events' if external else publisher_name + '_events'
 
-                self.exchange = rabbitpy.Exchange(
-                    channel=channel,
-                    name=self.exchange_name,
-                    exchange_type=exchange_type,
-                    durable=True,
-                )
+                self.exchange = rabbitpy.Exchange(channel=channel,
+                                                  name=self.exchange_name,
+                                                  exchange_type=exchange_type,
+                                                  durable=True)
                 self.exchange.declare()
                 logger.info(
                     "Exchange is declared Successfully from Subscriber: {} | with the name: {}".format(
@@ -275,17 +235,22 @@ class BRabbit:
                     message_ttl=self.__msg_lifetime(),
                     exclusive=False,
                 )
+                queue = rabbitpy.Queue(channel,
+                                       name=queue_name,
+                                       durable=important_subscription,
+                                       message_ttl=self.__msg_lifetime(),
+                                       exclusive=False)
                 queue.declare()
 
-                # logger.info('{queue.name} was successfully declared from subscriber: {queue_name}')
+                # logger.info('{queue.name} was successfully declared from subscriber: {subscriber_name}')
                 queue.bind(self.exchange_name, routing_key)
                 self.queue_name = queue.name
                 self.event_listener = event_listener
 
         def __subscribe(self):
-            """
+            '''
 				start waiting on events. You may do this in parallel.
-			"""
+			'''
             with self.b_rabbit.connection.channel() as channel:
                 queue = rabbitpy.Queue(channel, self.queue_name)
                 self.b_rabbit.add_active_queues(queue)
@@ -298,33 +263,21 @@ class BRabbit:
         def subscribe_on_thread(self, *thread_args, **thread_kwargs):
             """start Subscriber on an independent Thread"""
 
-            subscriber_thread = threading.Thread(
-                target=self.__subscribe, *thread_args, **thread_kwargs
-            )
+            subscriber_thread = threading.Thread(target=self.__subscribe, *thread_args, **thread_kwargs)
             subscriber_thread.start()
             if subscriber_thread.is_alive():
-                logger.info(
-                    "Subscriber is running on The Thread: {}".format(
-                        subscriber_thread.name
-                    )
-                )
+                logger.info("Subscriber is running on The Thread: {}".format(subscriber_thread.name))
 
         def __get_subscriber_name(self, in_docker=True):
             """get the subscriber name from host"""
             try:
                 if not in_docker:
                     import os
-
-                    name = os.path.dirname(
-                        os.path.abspath(__file__)
-                    )  # get the whole Path of the Project Repository
+                    name = os.path.dirname(os.path.abspath(__file__))  # get the whole Path of the Project Repository
                     # logger.debug(f'name of the current Subscriber: {name}')
-                    return name.split("\\")[
-                        -2
-                    ]  # return only the name of the Project (example: Statistics Service)
+                    return name.split('\\')[-2]  # return only the name of the Project (example: Statistics Service)
                 else:
                     import socket
-
                     name = socket.gethostname()
                     # logger.debug(f'name of the current Subscriber: {name}')
                     return name
@@ -337,9 +290,7 @@ class BRabbit:
 				:param days: message life in the Queue. default to one Week
 			"""
             try:
-                return (
-                    days * 24 * 60 * 60 * 1000
-                )  # convert those days to Milliseconds
+                return days * 24 * 60 * 60 * 1000  # convert those days to Milliseconds
             except Exception as e:
                 logger.exception(e.args)
 
@@ -348,38 +299,28 @@ class BRabbit:
         corr_id = None
         channel = None
 
-        """
+        '''
 		TaskExecutor registers on Task which is triggered by TaskRequester.
-		"""
+		'''
 
-        def __init__(
-            self, b_rabbit, executor_name: str, routing_key: str, task_listener
-        ):
+        def __init__(self, b_rabbit, executor_name: str, routing_key: str, task_listener):
             """
 				TaskExecutor registers on Task which is triggered by TaskRequester.
 				:param str executor_name: Name of Executor
 				:param str routing_key: Routing Key of task
 				:param callable task_listener: User task listener which is called
 			"""
-            assert (
-                type(executor_name) is str
-            ), "executor name should be a string"
+            assert type(executor_name) is str, "executor name should be a string"
             assert type(routing_key) is str, "routing key should be a string"
 
             if not b_rabbit.connection:
-                raise Exception("Create Instance of Class BRabbit first")
+                raise Exception('Create Instance of Class BRabbit first')
 
-            self.exchange_name, self.routing_key = (
-                executor_name + "_tasks",
-                routing_key,
-            )
+            self.exchange_name, self.routing_key = executor_name + '_tasks', routing_key
             self.b_rabbit, self.task_listener = b_rabbit, task_listener
-            self.executor_name, self.exchange_name = (
-                executor_name,
-                self.exchange_name,
-            )
+            self.executor_name, self.exchange_name = executor_name, self.exchange_name
 
-        def __register_on_task(self, queue_name=""):
+        def __register_on_task(self, queue_name=''):
             """
 				Registers task. This might be called in parallel.
 				:param queue_name: task queue that will receive the request. default value set to random uuid queue
@@ -387,9 +328,7 @@ class BRabbit:
 
             with self.b_rabbit.connection.channel() as channel:
 
-                task_queue = rabbitpy.Queue(
-                    channel, name=queue_name, durable=True, exclusive=True
-                )
+                task_queue = rabbitpy.Queue(channel, name=queue_name, durable=True, exclusive=True)
                 task_queue.declare()
                 task_queue.bind(self.exchange_name, self.routing_key)
                 self.b_rabbit.add_active_queues(task_queue)
@@ -397,10 +336,7 @@ class BRabbit:
                 for message in task_queue.consume():
 
                     self.channel = channel
-                    self.corr_id, self.replyTo = (
-                        message.properties["correlation_id"],
-                        message.properties["reply_to"],
-                    )
+                    self.corr_id, self.replyTo = message.properties['correlation_id'], message.properties['reply_to']
                     self.msg, self.deliveryTag = message, message.delivery_tag
                     message.ack()
 
@@ -408,9 +344,7 @@ class BRabbit:
                         self.task_listener(self, message.body)
 
                     except Exception as e:
-                        logger.critical(
-                            "Error in Custom Implementation of TaskExecuter"
-                        )
+                        logger.critical('Error in Custom Implementation of TaskExecuter')
                         logger.debug(e.args, exc_info=False)
 
         # @calc_execution_time
@@ -419,46 +353,29 @@ class BRabbit:
 				Send return to TaskRequester which contains the results of task.
 				:param str payload: payload of task response
 			"""
-            assert (
-                type(payload) is str
-            ), "payload must be a string or convertible to JSON"
+            assert type(payload) is str, "payload must be a string or convertible to JSON"
 
-            response = rabbitpy.Message(
-                self.channel,
-                body_value=payload,
-                properties={"correlation_id": self.corr_id},
-            )
+            response = rabbitpy.Message(self.channel,
+                                        body_value=payload,
+                                        properties={'correlation_id': self.corr_id})
 
-            response.publish(exchange="", routing_key=self.replyTo)
+            response.publish(exchange='', routing_key=self.replyTo)
 
         def run_task_on_thread(self, *thread_args, **thread_kwargs):
             """start task Executor on an independent Thread"""
 
-            task_thread = threading.Thread(
-                target=self.__register_on_task, *thread_args, **thread_kwargs
-            )
+            task_thread = threading.Thread(target=self.__register_on_task, *thread_args, **thread_kwargs)
             task_thread.start()
             if task_thread.is_alive():
-                logger.debug(
-                    "Task Executor is running on The Thread: {}".format(
-                        task_thread.name
-                    )
-                )
+                logger.debug("Task Executor is running on The Thread: {}".format(task_thread.name))
 
     class TaskRequesterSynchron:
-        """
+        '''
 		TaskRequesterSynchron requests tasks synchronously.
-		"""
-
+		'''
         corr_id = None
 
-        def __init__(
-            self,
-            b_rabbit,
-            executor_name: str,
-            routing_key: str,
-            response_listener,
-        ):
+        def __init__(self, b_rabbit, executor_name: str, routing_key: str, response_listener):
 
             """
 				TaskRequesterSynchron requests tasks synchronously.
@@ -466,45 +383,27 @@ class BRabbit:
 				:param str routing_key: Routing Key of task which is set by Executor
 				:param callable response_listener: User response listener which is called
 			"""
-            assert (
-                type(executor_name) is str
-            ), "executor_name argument must be a string"
-            assert (
-                type(routing_key) is str
-            ), "routing_key argument must be a string"
+            assert type(executor_name) is str, "executor_name argument must be a string"
+            assert type(routing_key) is str, "routing_key argument must be a string"
 
             if not b_rabbit.connection:
-                raise Exception(
-                    "Create Instance of Class RabbitMqCommunicationInterface first"
-                )
+                raise Exception('Create Instance of Class RabbitMqCommunicationInterface first')
 
-            self.b_rabbit, self.corr_id, self.executor_name = (
-                b_rabbit,
-                str(uuid.uuid4()),
-                executor_name,
-            )
+            self.b_rabbit, self.corr_id, self.executor_name = b_rabbit, str(uuid.uuid4()), executor_name
 
             with b_rabbit.connection.channel() as channel:
                 self.channel, self.routing_key = channel, routing_key
-                self.exchange_name, self.response_listener = (
-                    executor_name + "_tasks",
-                    response_listener,
-                )
-                self.exchange = rabbitpy.Exchange(
-                    channel=channel,
-                    exchange_type="direct",
-                    name=self.exchange_name,
-                    durable=True,
-                )
+                self.exchange_name, self.response_listener = executor_name + '_tasks', response_listener
+                self.exchange = rabbitpy.Exchange(channel=channel,
+                                                  exchange_type='direct',
+                                                  name=self.exchange_name,
+                                                  durable=True)
 
                 self.exchange.declare()
                 logger.debug(
-                    "Exchange: {} was successfully declared from task Requester: {}".format(
-                        "self.exchange_name", "executor_name"
-                    )
-                )
+                    'Exchange: {} was successfully declared from task Requester: {}'.format('self.exchange_name', 'executor_name'))
 
-        def request_task(self, payload: str, queue_name=""):
+        def request_task(self, payload: str, queue_name=''):
             """
 				Do request task from executer.
 				:param str payload: payload of task Request
@@ -515,32 +414,24 @@ class BRabbit:
 
             with self.b_rabbit.connection.channel() as channel:
 
-                callback_queue = rabbitpy.Queue(
-                    channel, name=queue_name, durable=True, exclusive=True
-                )
+                callback_queue = rabbitpy.Queue(channel, name=queue_name, durable=True, exclusive=True)
                 callback_queue.declare()
                 # logger.info(
                 #     f'{callback_queue.name} was successfully declared from task Requester: {self.executor_name}')
 
-                request = rabbitpy.Message(
-                    channel,
-                    body_value=payload,
-                    properties={
-                        "reply_to": callback_queue.name,
-                        "correlation_id": self.corr_id,
-                    },
-                )
+                request = rabbitpy.Message(channel,
+                                           body_value=payload,
+                                           properties={'reply_to': callback_queue.name,
+                                                       'correlation_id': self.corr_id})
 
-                request.publish(
-                    exchange=self.exchange, routing_key=self.routing_key
-                )
+                request.publish(exchange=self.exchange, routing_key=self.routing_key)
                 self.b_rabbit.add_active_queues(callback_queue)
 
                 for message in callback_queue.consume(prefetch=1):
                     message.ack()
 
                     # check if correlation id fits to the call you did
-                    if self.corr_id == message.properties["correlation_id"]:
+                    if self.corr_id == message.properties['correlation_id']:
                         self.response_listener(message.body)
 
     class TaskRequesterAsynchron:
@@ -548,13 +439,7 @@ class BRabbit:
 			TaskRequesterSynchron requests tasks asynchon.
 		"""
 
-        def __init__(
-            self,
-            b_rabbit,
-            executor_name: str,
-            routing_key: str,
-            response_listener,
-        ):
+        def __init__(self, b_rabbit, executor_name: str, routing_key: str, response_listener):
             """
 			TaskRequesterSynchron requests tasks asynchon.
 			:param str executor_name: Name of Executor
@@ -565,16 +450,12 @@ class BRabbit:
             assert type(routing_key) is str, "routing_key must be a string"
 
             if not b_rabbit.connection:
-                raise Exception(
-                    "Create Instance of Class RabbitMqCommunicationInterface first"
-                )
+                raise Exception('Create Instance of Class RabbitMqCommunicationInterface first')
 
-            self.task_requester = b_rabbit.TaskRequesterSynchron(
-                b_rabbit,
-                executerName=executor_name,
-                routingKey=routing_key,
-                responseListener=response_listener,
-            )
+            self.task_requester = b_rabbit.TaskRequesterSynchron(b_rabbit,
+                                                                 executerName=executor_name,
+                                                                 routingKey=routing_key,
+                                                                 responseListener=response_listener)
 
         def request_task(self, payload: str):
             """
@@ -582,18 +463,11 @@ class BRabbit:
 				:param str payload: Data needed for task execution.
 			"""
 
-            assert (
-                type(payload) is str
-            ), "payload of the request_task method must be of type string"
-            thread = threading.Thread(
-                target=lambda: self.task_requester.request_task(
-                    payload=payload
-                )
-            )
+            assert type(payload) is str, "payload of the request_task method must be of type string"
+            thread = threading.Thread(target=lambda: self.task_requester.request_task(payload=payload))
             thread.start()
-
     class Properties:
-        def __init__(self, **kwargs):
-            self.properties_dict = {}
-            for key, value in kwargs.items():
-                self.properties_dict[key] = value
+            def __init__(self, **kwargs):
+                self.properties_dict = {}
+                for key, value in kwargs.items():
+                    self.properties_dict[key] = value
