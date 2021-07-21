@@ -217,9 +217,9 @@ class BRabbit:
                     )
                 )
                 if routing_key_only:
-                    queue_name = routing_key
+                    self.queue_name = routing_key
                 else:
-                    queue_name = (
+                    self.queue_name = (
                         self.exchange_name
                         + "_"
                         + routing_key
@@ -230,13 +230,13 @@ class BRabbit:
                 logger.info("subscriber name: {}".format(queue_name))
                 queue = rabbitpy.Queue(
                     channel,
-                    name=queue_name,
+                    name=self.queue_name,
                     durable=important_subscription,
                     message_ttl=self.__msg_lifetime(),
                     exclusive=False,
                 )
                 queue = rabbitpy.Queue(channel,
-                                       name=queue_name,
+                                       name=self.queue_name,
                                        durable=important_subscription,
                                        message_ttl=self.__msg_lifetime(),
                                        exclusive=False)
