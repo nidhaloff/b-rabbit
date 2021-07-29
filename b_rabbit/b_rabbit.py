@@ -5,10 +5,11 @@ import threading
 from typing import *
 from json import dumps
 import logging
-from helpers.logs import create_logger
+from os import path
 
-logger = create_logger(__name__)
-
+conf = path.join(path.dirname(path.abspath(__file__)), 'logging.ini')
+logging.config.fileConfig(conf, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 def calc_execution_time(func):
     """calculate execution Time of a function"""
