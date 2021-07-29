@@ -5,7 +5,7 @@ import threading
 from typing import *
 from json import dumps
 import logging
-from helpers.logs import create_logger
+from logs import create_logger
 
 logger = create_logger(__name__)
 
