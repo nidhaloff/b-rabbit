@@ -4,10 +4,13 @@ import uuid
 import threading
 from typing import *
 from json import dumps
-import logging
-from logs import create_logger
+import logging.config
+from os import path
 
-logger = create_logger(__name__)
+
+conf = path.join(path.dirname(path.abspath(__file__)), 'logging.ini')
+logging.config.fileConfig(conf, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 
 def calc_execution_time(func):
@@ -474,11 +477,11 @@ class BRabbit:
             def __init__(self, **kwargs):
                 """
                 :param key=value **kwargs: Assign rabbitpy.message.properties values here.
-                
+
                                            Ex: p = BRabbit.Properties(correlation_id = "val").
-                                           
+
                                            Provide this object as an argument to an
-                                           EventPublisher.publish() call to add 
+                                           EventPublisher.publish() call to add
                                            properties to your message. See rabbitpy
                                            documentation for all properties values
                                            and types.

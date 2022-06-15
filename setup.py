@@ -60,6 +60,7 @@ setup(
               'remote procedure call', 'RPC'],
     name='b_rabbit',
     packages=find_packages(include=['b_rabbit', 'b_rabbit.*']),
+    package_data={'b_rabbit': ['logging.ini']},
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
