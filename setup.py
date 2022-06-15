@@ -60,10 +60,11 @@ setup(
               'remote procedure call', 'RPC'],
     name='b_rabbit',
     packages=find_packages(include=['b_rabbit', 'b_rabbit.*']),
+    package_data={'b_rabbit': ['logging.ini']},
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/nidhaloff/b_rabbit',
-    version='1.2.3',
+    version='1.2.4',
     zip_safe=False,
 )
