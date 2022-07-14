@@ -193,6 +193,7 @@ class BRabbit:
             external: bool = False,
             important_subscription: bool = True,
             event_listener: Callable = None,
+            verbose : bool = False
         ):
             """
 				Subscribe to events send by publisher
@@ -202,6 +203,7 @@ class BRabbit:
 				:param str exchange_type: Type of exchange
 				:param bool external: Is Publisher external?
 				:param callable event_listener: User event listener (eventListener(body))
+                :param verbose: Pretty print inbound messages?
 			"""
 
             if not b_rabbit.connection:
@@ -252,6 +254,7 @@ class BRabbit:
                 queue.bind(self.exchange_name, routing_key)
                 self.queue_name = queue.name
                 self.event_listener = event_listener
+                self.verbose = verbose
 
         def __subscribe(self):
             '''
@@ -263,7 +266,7 @@ class BRabbit:
                 self.b_rabbit.add_active_queues(queue)
 
                 for message in queue.consume():
-                    message.pprint(True)
+                    if self.verbose: message.pprint(True)
                     message.ack()
                     self.event_listener(message)
 
