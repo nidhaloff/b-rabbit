@@ -68,7 +68,7 @@ Ready to contribute? Here's how to set up `b_rabbit` for local development.
 
     $ mkvirtualenv b_rabbit
     $ cd b_rabbit/
-    $ python setup.py develop
+    $ python -m pip install -e ".[dev]"
 
 4. Create a branch for local development::
 
@@ -80,8 +80,8 @@ Ready to contribute? Here's how to set up `b_rabbit` for local development.
    tests, including testing other Python versions with tox::
 
     $ flake8 b_rabbit tests
-    $ python setup.py test or pytest
-    $ tox
+    $ python -m pip install -e ".[test]"
+    $ tox -e py38
 
    To get flake8 and tox, just pip install them into your virtualenv.
 

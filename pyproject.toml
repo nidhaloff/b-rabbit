@@ -1,0 +1,93 @@
+[build-system]
+requires = ["hatchling>=1.8.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "b_rabbit"
+dynamic = ["version"]
+description = "An abstract interface for RabbitMQ communication"
+readme = "README.rst"
+license = "MIT"
+requires-python = ">=3.4"
+authors = [
+	{ name = "Nidhal Baccouri", email = "nidhalbacc@gmail.com" },
+]
+keywords = [
+	"b_rabbit",
+	"rabbitmq",
+	"RabbitMQ",
+	"Microservices",
+	"SOA",
+	"MQTT",
+	"AMQP",
+	"Queues",
+	"Messaging queue",
+	"queue messaging",
+	"publish-subscribe",
+	"publish-pattern",
+	"subscribe-pattern",
+	"publish messaging",
+	"subscribe messaging",
+	"remote procedure call",
+	"RPC"
+]
+classifiers = [
+	"Development Status :: 4 - Beta",
+	"Intended Audience :: Developers",
+	"Intended Audience :: Education",
+	"Intended Audience :: Information Technology",
+	"Intended Audience :: System Administrators",
+	"Intended Audience :: Telecommunications Industry",
+	"Operating System :: OS Independent",
+	"Topic :: Communications",
+	"Topic :: Home Automation",
+	"Topic :: Internet :: Log Analysis",
+	"Topic :: Software Development",
+	"Topic :: System :: Networking",
+	"License :: OSI Approved :: MIT License",
+	"Natural Language :: English",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.5",
+	"Programming Language :: Python :: 3.6",
+	"Programming Language :: Python :: 3.7",
+	"Programming Language :: Python :: 3.8"
+]
+dependencies = [
+	"rabbitpy~=2.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+	"pip",
+	"bump2version",
+	"wheel",
+	"watchdog",
+	"flake8",
+	"tox",
+	"coverage",
+	"Sphinx",
+	"twine",
+	"rabbitpy",
+	"pytest",
+	"pytest-runner",
+	"build",
+]
+test = [
+	"pytest",
+]
+
+[project.urls]
+Homepage = "https://github.com/nidhaloff/b_rabbit"
+
+[tool.hatch.version]
+path = "b_rabbit/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+	"/b_rabbit",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+	"/b_rabbit",
+]
