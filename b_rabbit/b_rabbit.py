@@ -43,6 +43,7 @@ class BRabbit:
             port: int = 5672,
             user: str = None,
             password: str = None,
+            virtual_host: str = None,
         ):
 
             """
@@ -50,8 +51,11 @@ class BRabbit:
             :param str host: Hostname of RabbitMQ Server
             :param int port: Port of RabbitMQ Server
             """
-
-            if user != None:
+            if virtual_host != None:
+                self.connection = rabbitpy.Connection(
+                    "amqp://{}:{}@{}:{}/{}".format(user, password, host, str(port), virtual_host)
+                )
+            elif user != None:
                 self.connection = rabbitpy.Connection(
                     "amqp://{}:{}@{}:{}/".format(user, password, host, str(port))
                 )
